@@ -5,7 +5,7 @@ import Spinner from "./components/Spinner"
 import { setValue } from "./store/taskSlice"
 
 function App() {
-  const task = useSelector((state) => console.log(state) || state.task)
+  const task = useSelector(state => state.task)
   const dispatch = useDispatch()
   return (
     <>
