@@ -1,7 +1,9 @@
-import { Vortex } from "react-loader-spinner"
 import React from "react"
+import { Vortex } from "react-loader-spinner"
+import { useSelector } from "react-redux"
 
-const Spinner = ({ visible }) => {
+const Spinner = () => {
+  const visible = useSelector((state) => state.settings.showSpinner)
   if (!visible) return
 
   return (

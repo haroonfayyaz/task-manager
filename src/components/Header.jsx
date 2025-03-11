@@ -14,12 +14,6 @@ function Header() {
       </div>
 
       <div className="flex items-center space-x-3">
-        <button
-          disabled
-          className="rounded bg-[#579DFF]/10 px-3 py-1.5 text-sm font-medium text-[#579DFF] hover:bg-[#579DFF]/20"
-        >
-          Create
-        </button>
         <div className="h-8 w-8 rounded-full bg-gray-500/30 flex items-center justify-center text-sm text-white cursor-pointer hover:bg-gray-500/40">
           AT
         </div>

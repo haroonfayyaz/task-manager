@@ -1,36 +1,57 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
-import React, { useContext, useState } from "react"
-import SpinnerContext from "../contexts/SpinnerContext"
+import _ from "lodash"
+import React, { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { createList, getLists } from "../services/dataService"
+import { setStages } from "../store/taskManagerSlice"
 import { RenderIf } from "../utils/common"
 import ButtonWithIcon from "./ButtonWithIcon"
 import InputForm from "./InputForm"
+import Stage from "./Stage"
 
 const TaskBoard = () => {
+  const dispatch = useDispatch()
+  const taskManager = useSelector(state => state.taskManager)
+
   const [showNewStageInput, setShowNewStageInput] = useState(false)
   const [newStageName, setNewStageName] = useState("")
 
-  const setShowSpinner = useContext(SpinnerContext)
+  useEffect(() => {
+    dispatch(getLists())
+  }, [])
 
   const handleSubmit = async e => {
     e.preventDefault()
-    setShowSpinner(true)
+    dispatch(createList(newStageName))
     setNewStageName("")
-    setTimeout(() => {
-      setShowSpinner(false)
-    }, 3000)
     setShowNewStageInput(false)
+  }
+
+  const handleDrop = async ({ task, dragStageId }, dropStageId) => {
+    const sourceListId = dragStageId
+    const destinationListId = dropStageId
+    if (sourceListId && destinationListId) {
+      const updatedLists = _.cloneDeep(taskManager.stages)
+      const indexToUpdate = _.findIndex(updatedLists, ["id", dragStageId])
+      updatedLists[indexToUpdate].tasks = updatedLists[indexToUpdate].tasks.filter(c => c.id !== task.id)
+      updatedLists[_.findIndex(updatedLists, ["id", dropStageId])].tasks.push(task)
+      dispatch(setStages(updatedLists))
+    }
   }
 
   return (
     <div className="flex h-full items-start justify-start overflow-x-auto overflow-y-hidden bg-gradient-to-r from-blue-500 to-purple-600 p-6">
       <div className="flex space-x-4">
+        {taskManager.stages.map(stage => (
+          <Stage onDrop={handleDrop} stage={stage} />
+        ))}
         <div className="h-fit min-w-[272px] rounded-xl bg-white/20 p-3 backdrop-blur-sm transition-all hover:bg-white/30">
           <div className="inline-flex w-full items-center justify-between">
             <h2 className="text-lg font-medium text-white">Add another stage</h2>
             <ButtonWithIcon
               color={"bg-white/10"}
               hoverColor={"bg-white/20"}
-              title={"Create Stage"}
+              title="Create Stage"
               onClick={() => setShowNewStageInput(true)}
               icon={faPlus}
             />
@@ -38,7 +59,7 @@ const TaskBoard = () => {
           <RenderIf isTrue={showNewStageInput}>
             <InputForm
               onSubmit={e => handleSubmit(e)}
-              placeholder="Enter list title..."
+              placeholder="Enter stage title..."
               onBlur={() => {
                 setShowNewStageInput(false)
                 setNewStageName("")
