@@ -10,8 +10,8 @@ import Stage from "./Stage"
 
 const TaskBoard = () => {
   const dispatch = useDispatch()
-  const taskManager = useSelector
-  const { updateTaskLists } = useTask(taskManager)
+  const taskManager = useSelector(state => state.taskManager)
+  const { updateTaskLists } = useTask()
   state => state.taskManager
 
   const [showNewStageInput, setShowNewStageInput] = useState(false)

@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from "react-redux"
-import { setStages } from "../store/settingsSlice" // Adjust the import path as necessary
 import _ from "lodash"
+import { useDispatch, useSelector } from "react-redux"
+import { setStages } from "../store/taskManagerSlice"
 
 const useTask = () => {
   const dispatch = useDispatch()
