@@ -1,19 +1,19 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useState } from "react"
 import "./App.css"
 import Header from "./components/Header"
 import Spinner from "./components/Spinner"
-import { setValue } from "./store/taskSlice"
+import TaskBoard from "./components/TaskBoard"
+import SpinnerContext from "./contexts/SpinnerContext"
 
 function App() {
-  const task = useSelector(state => state.task)
-  const dispatch = useDispatch()
+  const [showSpinner, setShowSpinner] = useState(false)
   return (
     <>
       <Header />
-      {/* <Spinner /> */}
-
-      <h2>{task.value}</h2>
-      <button onClick={() => dispatch(setValue(task.value + 1))}>Test</button>
+      <Spinner visible={showSpinner} />
+      <SpinnerContext.Provider value={setShowSpinner}>
+        <TaskBoard />
+      </SpinnerContext.Provider>
     </>
   )
 }
