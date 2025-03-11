@@ -1,6 +1,6 @@
 import "./App.css"
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
 import Header from "./components/Header"
 import Spinner from "./components/Spinner"
 import TaskBoard from "./components/TaskBoard"

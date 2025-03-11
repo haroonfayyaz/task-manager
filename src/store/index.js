@@ -5,8 +5,8 @@ import settingsReducer from "./settingsSlice"
 const store = configureStore({
   reducer: {
     taskManager: taskManagerReducer,
-    settings: settingsReducer
+    settings: settingsReducer,
   },
 })
 
-export default store;
+export default store
