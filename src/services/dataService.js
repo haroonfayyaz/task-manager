@@ -13,7 +13,6 @@ export const getLists = createAsyncThunk("get_lists", () => {
 
 export const createList = createAsyncThunk("create_list", name => {
   const stages = loadStages() || []
-  console.log("stages: ", stages)
   const newId = _.get(_.last(stages), "id", 0) + 1
   stages.push(createStage(newId, name))
 
@@ -29,13 +28,11 @@ export const updateTask = createAsyncThunk("update_task", ({ stageId, taskId, pa
   const stage = _.find(stages, ["id", stageId])
   if (!stage) return
 
-  const task = _.find(stage.tasks, ["id", taskId])
-  if (!task) return
+  const idx = _.findIndex(stage.tasks, ["id", taskId])
 
-  _.assign(task, payload)
-
+  stage.tasks[idx] = { ...stage.tasks[idx], ...payload }
   storeStages(stages)
-  return stages
+  return _.cloneDeep(stages)
 })
 
 export const deleteTask = createAsyncThunk("delete_task", ({ stageId, taskId }) => {

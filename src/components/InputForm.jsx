@@ -1,6 +1,6 @@
 import React from "react"
 
-function InputForm({ onSubmit, placeholder, onBlur, onChange, value }) {
+function InputForm({ onSubmit, placeholder, onBlur, onChange, value, autoFocus }) {
   return (
     <form className="mt-4 animate-flip-down" onSubmit={onSubmit}>
       <input
@@ -8,6 +8,7 @@ function InputForm({ onSubmit, placeholder, onBlur, onChange, value }) {
         className="w-full rounded-md border border-gray-300 p-2"
         placeholder={placeholder}
         onBlur={onBlur}
+        autoFocus={autoFocus}
         onChange={onChange}
         value={value}
         required

@@ -38,6 +38,9 @@ export const taskSlice = createSlice({
 
       storeStages(state.stages)
     })
+    createAsyncReducer(builder, service.updateTask, (state, action) => {
+      state.stages = action.payload
+    })
     createAsyncReducer(builder, service.deleteTask, (state, action) => {
       state.stages = action.payload
     })
