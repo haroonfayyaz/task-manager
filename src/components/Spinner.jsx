@@ -1,5 +1,5 @@
-import { Vortex } from "react-loader-spinner";
-import React from "react";
+import { Vortex } from "react-loader-spinner"
+import React from "react"
 
 const Spinner = () => {
   return (
@@ -14,7 +14,7 @@ const Spinner = () => {
         colors={["red", "green", "blue", "yellow", "orange", "purple"]}
       />
     </div>
-  );
-};
+  )
+}
 
-export default Spinner;
+export default Spinner
