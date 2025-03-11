@@ -33,8 +33,8 @@ const TaskBoard = () => {
   return (
     <div className="flex h-full items-start justify-start overflow-x-auto overflow-y-hidden bg-gradient-to-r from-blue-500 to-purple-600 p-6">
       <div className="flex space-x-4">
-        {taskManager.stages.map(stage => (
-          <Stage onDrop={handleDrop} stage={stage} />
+        {taskManager.stages.map((stage, idx) => (
+          <Stage key={`__stage__${idx}`} onDrop={handleDrop} stage={stage} />
         ))}
         <div className="h-fit min-w-[272px] rounded-xl bg-white/20 p-3 backdrop-blur-sm transition-all hover:bg-white/30">
           <div className="inline-flex w-full items-center justify-between">

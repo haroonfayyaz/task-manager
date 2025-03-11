@@ -9,6 +9,7 @@ import Task from "./Task"
 import InputForm from "./InputForm"
 import { useDispatch } from "react-redux"
 import { addTask } from "../services/dataService"
+import StageContext from "../contexts/StageContext"
 
 export default function Stage({ onDrop, stage }) {
   const dispatch = useDispatch()
@@ -45,7 +46,9 @@ export default function Stage({ onDrop, stage }) {
         <div className="custom-scrollbar max-h-[calc(100vh-200px)] overflow-y-auto">
           <ul className="space-y-2">
             {_.get(stage, "tasks", []).map(task => (
-              <Task key={task.id} task={task} stageId={stage.id} />
+              <StageContext.Provider value={{ stage }}>
+                <Task key={task.id} task={task} />
+              </StageContext.Provider>
             ))}
           </ul>
         </div>
