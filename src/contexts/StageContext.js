@@ -1,5 +1,5 @@
-import React from "react";
+import React from "react"
 
-const StageContext = React.createContext();
+const StageContext = React.createContext()
 
-export default StageContext;
+export default StageContext
