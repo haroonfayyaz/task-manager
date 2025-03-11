@@ -1,10 +1,11 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
 import React from "react"
 import { useDrag } from "react-dnd"
+import { useDispatch } from "react-redux"
+import Swal from "sweetalert2"
+import { deleteTask } from "../services/dataService"
 import { ITEM_TYPES } from "../utils/constants"
 import ButtonWithIcon from "./ButtonWithIcon"
-import { useDispatch } from "react-redux"
-import { deleteTask } from "../services/dataService"
 
 export default function Task({ task, stageId }) {
   const dispatch = useDispatch()
@@ -21,9 +22,19 @@ export default function Task({ task, stageId }) {
   )
 
   const handleDelete = async taskId => {
-    const confirmed = window.confirm("Are you sure you want to delete this task?")
-    if (confirmed) {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    })
+
+    if (result.isConfirmed) {
       dispatch(deleteTask({ stageId, taskId }))
+      Swal.fire("Deleted!", "Your task has been deleted.", "success")
     }
   }
 
@@ -38,7 +49,10 @@ export default function Task({ task, stageId }) {
               hoverColor={"bg-red-500"}
               title="Remove Task"
               icon={faTrash}
-              onClick={() => handleDelete(task.id)}
+              onClick={e => {
+                e.stopPropagation()
+                handleDelete(task.id)
+              }}
             />
           </div>
         </div>
