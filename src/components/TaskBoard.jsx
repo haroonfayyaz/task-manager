@@ -12,14 +12,13 @@ const TaskBoard = () => {
   const dispatch = useDispatch()
   const taskManager = useSelector(state => state.taskManager)
   const { updateTaskLists } = useTask()
-  state => state.taskManager
 
   const [showNewStageInput, setShowNewStageInput] = useState(false)
   const [newStageName, setNewStageName] = useState("")
 
   useEffect(() => {
     dispatch(getLists())
-  }, [])
+  }, [dispatch])
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -31,8 +30,8 @@ const TaskBoard = () => {
   const handleDrop = async ({ task, dragStageId }, dropStageId) => updateTaskLists(task, dragStageId, dropStageId)
 
   return (
-    <div className="flex h-full items-start justify-start overflow-x-auto overflow-y-hidden bg-gradient-to-r from-blue-500 to-purple-600 p-6">
-      <div className="flex space-x-4">
+    <div className="flex h-full items-start justify-start overflow-x-auto bg-gradient-to-r from-blue-500 to-purple-600 p-6">
+      <div className="flex flex-wrap space-x-4 space-y-4 overflow-y-auto h-full">
         {taskManager.stages.map((stage, idx) => (
           <Stage key={`__stage__${idx}`} onDrop={handleDrop} stage={stage} />
         ))}
