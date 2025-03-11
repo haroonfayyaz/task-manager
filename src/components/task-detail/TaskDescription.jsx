@@ -39,7 +39,7 @@ const TaskDescription = () => {
           rows={4}
         />
       ) : (
-        <p className="text-gray-700">{description || "No description available"}</p>
+        <p className="text-gray-700 break-words">{description || "No description available"}</p>
       )}
     </div>
   )
