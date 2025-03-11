@@ -1,9 +1,8 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
-import _ from "lodash"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import useTask from "../hooks/useTask"
 import { createList, getLists } from "../services/dataService"
-import { setStages } from "../store/taskManagerSlice"
 import { RenderIf } from "../utils/common"
 import ButtonWithIcon from "./ButtonWithIcon"
 import InputForm from "./InputForm"
@@ -11,7 +10,9 @@ import Stage from "./Stage"
 
 const TaskBoard = () => {
   const dispatch = useDispatch()
-  const taskManager = useSelector(state => state.taskManager)
+  const taskManager = useSelector
+  const { updateTaskLists } = useTask(taskManager)
+  state => state.taskManager
 
   const [showNewStageInput, setShowNewStageInput] = useState(false)
   const [newStageName, setNewStageName] = useState("")
@@ -27,17 +28,7 @@ const TaskBoard = () => {
     setShowNewStageInput(false)
   }
 
-  const handleDrop = async ({ task, dragStageId }, dropStageId) => {
-    const sourceListId = dragStageId
-    const destinationListId = dropStageId
-    if (sourceListId && destinationListId) {
-      const updatedLists = _.cloneDeep(taskManager.stages)
-      const indexToUpdate = _.findIndex(updatedLists, ["id", dragStageId])
-      updatedLists[indexToUpdate].tasks = updatedLists[indexToUpdate].tasks.filter(c => c.id !== task.id)
-      updatedLists[_.findIndex(updatedLists, ["id", dropStageId])].tasks.push(task)
-      dispatch(setStages(updatedLists))
-    }
-  }
+  const handleDrop = async ({ task, dragStageId }, dropStageId) => updateTaskLists(task, dragStageId, dropStageId)
 
   return (
     <div className="flex h-full items-start justify-start overflow-x-auto overflow-y-hidden bg-gradient-to-r from-blue-500 to-purple-600 p-6">
