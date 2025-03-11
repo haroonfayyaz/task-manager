@@ -19,7 +19,7 @@ const TaskBoard = () => {
   useEffect(() => {
     dispatch(getLists())
 
-    const handleStorageChange = (event) => {
+    const handleStorageChange = event => {
       if (event.key === "stages") {
         dispatch(getLists())
       }
