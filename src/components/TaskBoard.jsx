@@ -18,6 +18,18 @@ const TaskBoard = () => {
 
   useEffect(() => {
     dispatch(getLists())
+
+    const handleStorageChange = (event) => {
+      if (event.key === "stages") {
+        dispatch(getLists())
+      }
+    }
+
+    window.addEventListener("storage", handleStorageChange)
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange)
+    }
   }, [dispatch])
 
   const handleSubmit = async e => {
