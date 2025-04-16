@@ -37,10 +37,6 @@ This project is a responsive and interactive Task Manager built using React.js a
 
    This will start the app in development mode
 
-## Time Taken to Complete the Assignment
-
-The estimated time to complete this assignment was approximately 4-5 hours. This includes setting up the project, implementing the required features, and testing.
-
 ## Brief Explanation of the Implementation
 
 - **State Management:** The application uses Redux Toolkit for state management, ensuring a scalable and maintainable architecture.
